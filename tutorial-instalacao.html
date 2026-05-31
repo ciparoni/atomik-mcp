@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como instalar o MCP do Atomik — Tutorial passo a passo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=Cabin:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a18;
+    --bg-elevated: #0e0e1f;
+    --bg-card: #15152a;
+    --bg-code: #07071a;
+    --border: #1a1a2c;
+    --border-strong: #2a2a3a;
+    --honey: #ffcd81;
+    --amber: #f19a09;
+    --text: #faf9f5;
+    --text-dim: #b0aea5;
+    --text-muted: #7a7870;
+    --green: #10b981;
+    --red: #f43f5e;
+    --accent-soft: rgba(255, 205, 129, 0.06);
+    --accent-mid: rgba(255, 205, 129, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cabin', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 800px 600px at 50% 0%, rgba(255, 205, 129, 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 600px 800px at 90% 80%, rgba(255, 152, 0, 0.025) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero {
+    padding: 80px 0 56px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--honey);
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+  .badge-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--honey);
+    box-shadow: 0 0 8px var(--honey);
+  }
+  h1.title {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 56px;
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  h1.title em { color: var(--honey); font-style: italic; }
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+  .meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 32px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+  .intro-box {
+    margin: 48px 0;
+    padding: 28px 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    border-left: 3px solid var(--honey);
+  }
+  .intro-box h2 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .intro-box p {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .prereqs {
+    margin: 48px 0;
+  }
+  .prereqs h2 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 30px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .prereqs .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .prereq {
+    padding: 20px 22px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .prereq h3 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .prereq p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .prereq a { color: var(--honey); text-decoration: none; border-bottom: 1px dashed currentColor; }
+
+  main.steps { margin: 64px 0; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 36px;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+  }
+  .step:first-child { border-top: none; padding-top: 0; }
+
+  .step-num {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--honey);
+    font-weight: 400;
+  }
+  .step-content h2 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .step-content p {
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+  .step-content ul {
+    margin: 14px 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .step-content ul li {
+    position: relative;
+    padding: 8px 0 8px 28px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .step-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    color: var(--honey);
+  }
+  .step-content strong { color: var(--text); font-weight: 600; }
+  .step-content a {
+    color: var(--honey);
+    text-decoration: none;
+    border-bottom: 1px dashed currentColor;
+  }
+  .step-content a:hover { color: var(--amber); }
+
+  .code-block {
+    margin: 18px 0;
+    background: var(--bg-code);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid var(--border-strong);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .copy-btn {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-dim);
+    font-family: 'Cabin', sans-serif;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover {
+    background: var(--accent-soft);
+    color: var(--honey);
+    border-color: var(--honey);
+  }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+  .code-block pre {
+    padding: 16px 18px;
+    margin: 0;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .code-block .com { color: var(--text-muted); }
+  .code-block .str { color: var(--honey); }
+  .code-block .key { color: #93c5fd; }
+
+  code.inline {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px;
+    background: var(--accent-soft);
+    color: var(--honey);
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--border-strong);
+  }
+
+  .tip {
+    margin: 18px 0;
+    padding: 16px 20px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--honey);
+    border-radius: 8px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .tip strong { color: var(--honey); }
+
+  .os-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 14px 0 0;
+    padding: 4px;
+    background: var(--bg-code);
+    border-radius: 8px;
+    width: fit-content;
+  }
+  .os-tab {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Cabin', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .os-tab:hover { color: var(--text); }
+  .os-tab.active {
+    background: var(--bg-card);
+    color: var(--honey);
+  }
+  .os-panel { display: none; margin-top: 14px; }
+  .os-panel.active { display: block; }
+
+  .check-section {
+    margin: 64px 0;
+    padding: 36px 40px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(255, 205, 129, 0.03));
+    border: 1px solid var(--border-strong);
+    border-left: 3px solid var(--green);
+    border-radius: 16px;
+  }
+  .check-section h2 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+  .check-section ul {
+    list-style: none;
+    margin-top: 16px;
+  }
+  .check-section li {
+    padding: 10px 0 10px 32px;
+    position: relative;
+    color: var(--text-dim);
+  }
+  .check-section li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .trouble {
+    margin: 64px 0;
+  }
+  .trouble h2 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .trouble p.lead {
+    color: var(--text-dim);
+    margin-bottom: 28px;
+  }
+  .faq {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .faq details {
+    border-top: 1px solid var(--border);
+  }
+  .faq details:first-child { border-top: none; }
+  .faq summary {
+    padding: 18px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 15px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq summary::after {
+    content: '+';
+    color: var(--honey);
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 400;
+    transition: transform 0.2s;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details > div {
+    padding: 0 24px 22px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .faq details > div code.inline { font-size: 12px; }
+
+  footer {
+    margin-top: 80px;
+    padding: 40px 0 60px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  footer a { color: var(--honey); text-decoration: none; }
+
+  @media (max-width: 720px) {
+    h1.title { font-size: 36px; }
+    .step { grid-template-columns: 1fr; gap: 0; }
+    .step-num { font-size: 48px; margin-bottom: 8px; }
+    .step-content h2 { font-size: 26px; }
+    .check-section { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="badge"><span class="badge-dot"></span>Atomik MCP</div>
+    <h1 class="title">Instale em<br><em>4 passos.</em></h1>
+    <p class="subtitle">Do zero ao primeiro componente no Elementor, sem nenhuma linha de código.</p>
+    <div class="meta">
+      <span>⏱ 5 minutos</span>
+      <span>💻 Nível iniciante</span>
+    </div>
+  </header>
+
+  <div class="intro-box">
+    <h2>O que é o MCP do Atomik?</h2>
+    <p>Uma ponte que liga o Claude (ou Claude Code) ao editor do Elementor aberto no seu navegador. Você pede em português normal — <em>"cria uma seção com 3 cards de depoimento"</em> — e o Claude monta tudo direto no editor. Sem copiar, sem colar.</p>
+  </div>
+
+  <section class="prereqs">
+    <h2>Antes de começar</h2>
+    <div class="grid">
+      <div class="prereq">
+        <h3>Claude Code</h3>
+        <p>Se ainda não tem, baixe em <a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a></p>
+      </div>
+      <div class="prereq">
+        <h3>Extensão Atomik</h3>
+        <p>Aquela que você já usa hoje pra editar Elementor no Chrome.</p>
+      </div>
+      <div class="prereq">
+        <h3>Editor Elementor</h3>
+        <p>Uma página em modo edição aberta, pra ver as mudanças acontecendo.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="steps">
+
+    <!-- PASSO 1 -->
+    <section class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h2>Instale o Node.js</h2>
+        <p>O Node é o "motor" que roda o MCP no seu computador. Você instala uma vez e esquece.</p>
+        <ul>
+          <li>Acesse <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a></li>
+          <li>Clique no botão verde <strong>"LTS"</strong> (Recommended For Most Users)</li>
+          <li>Abra o arquivo baixado e instale como qualquer programa</li>
+        </ul>
+        <div class="tip">
+          <strong>Conferir que deu certo:</strong> abra o Terminal (Mac) ou Prompt de Comando (Windows) e digite:
+          <div class="code-block" style="margin-top: 10px;">
+            <div class="code-head">Terminal<button class="copy-btn" data-code="node --version">Copiar</button></div>
+            <pre>node --version</pre>
+          </div>
+          Deve aparecer algo como <code class="inline">v22.10.0</code>. Apareceu um número? Tá pronto.
+        </div>
+      </div>
+    </section>
+
+    <!-- PASSO 2 -->
+    <section class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h2>Instale o Atomik MCP</h2>
+        <p>No mesmo Terminal/Prompt, cole este comando:</p>
+        <div class="code-block">
+          <div class="code-head">Terminal<button class="copy-btn" data-code="npm install -g @atomik-dev/mcp">Copiar</button></div>
+          <pre>npm install -g @atomik-dev/mcp</pre>
+        </div>
+        <p>Demora 30–60 segundos. Vai aparecer várias linhas — é normal. Quando o cursor voltar a piscar, terminou.</p>
+        <div class="tip">
+          <strong>Apareceu "permission denied" ou erro de permissão?</strong> No Mac/Linux, prefixe com <code class="inline">sudo</code>: <code class="inline">sudo npm install -g @atomik-dev/mcp</code> e digite sua senha.
+        </div>
+      </div>
+    </section>
+
+    <!-- PASSO 3 -->
+    <section class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h2>Avise o Claude Code</h2>
+        <p>Agora você precisa "ligar" o MCP ao Claude Code editando um arquivo de configuração.</p>
+
+        <div class="os-tabs">
+          <button class="os-tab active" data-target="mac3">Mac / Linux</button>
+          <button class="os-tab" data-target="win3">Windows</button>
+        </div>
+
+        <div class="os-panel active" id="mac3">
+          <p>No Terminal, cole:</p>
+          <div class="code-block">
+            <div class="code-head">Terminal<button class="copy-btn" data-code='open -a "TextEdit" ~/.claude.json 2>/dev/null || (echo "{}" > ~/.claude.json && open -a "TextEdit" ~/.claude.json)'>Copiar</button></div>
+            <pre>open -a "TextEdit" ~/.claude.json 2&gt;/dev/null || (echo "{}" &gt; ~/.claude.json &amp;&amp; open -a "TextEdit" ~/.claude.json)</pre>
+          </div>
+        </div>
+
+        <div class="os-panel" id="win3">
+          <p>No Prompt de Comando, cole:</p>
+          <div class="code-block">
+            <div class="code-head">Prompt<button class="copy-btn" data-code="notepad %USERPROFILE%\.claude.json">Copiar</button></div>
+            <pre>notepad %USERPROFILE%\.claude.json</pre>
+          </div>
+          <p>Se o Bloco de Notas perguntar pra criar o arquivo, clique <strong>"Sim"</strong>.</p>
+        </div>
+
+        <p style="margin-top: 22px;">No arquivo que abriu, cole isto (substituindo qualquer conteúdo existente — ou mesclando se já tiver outros MCPs configurados):</p>
+        <div class="code-block">
+          <div class="code-head">~/.claude.json<button class="copy-btn" data-code='{
+  "mcpServers": {
+    "atomik": {
+      "command": "atomik-mcp"
+    }
+  }
+}'>Copiar</button></div>
+          <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"atomik"</span>: {
+      <span class="key">"command"</span>: <span class="str">"atomik-mcp"</span>
+    }
+  }
+}</pre>
+        </div>
+        <p>Salve o arquivo (<strong>Cmd+S</strong> no Mac, <strong>Ctrl+S</strong> no Windows) e feche.</p>
+        <div class="tip">
+          <strong>Já tinha outros MCPs configurados?</strong> Adicione só a parte do <code class="inline">"atomik"</code> dentro do <code class="inline">"mcpServers"</code> existente — não substitua o arquivo todo.
+        </div>
+      </div>
+    </section>
+
+    <!-- PASSO 4 -->
+    <section class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h2>Reinicie e teste</h2>
+        <ul>
+          <li>Feche o <strong>Claude Code</strong> completamente (Cmd+Q no Mac / fechar pela barra de tarefas no Windows)</li>
+          <li>Abra de novo</li>
+          <li>No Claude Code, digite na barra: <code class="inline">/mcp</code></li>
+          <li>Deve aparecer <strong>"atomik"</strong> na lista com status <strong>conectado</strong></li>
+        </ul>
+        <p>Pra fechar o ciclo:</p>
+        <ul>
+          <li>Abra o Chrome com a extensão Atomik</li>
+          <li>Vá pra qualquer página em edição no Elementor</li>
+          <li>Abra o painel lateral do Atomik</li>
+          <li>Procure o <strong>pontinho verde brilhando</strong> no topo — ele indica que a ponte está ativa</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="check-section">
+    <h2>Funcionou. E agora?</h2>
+    <p style="color: var(--text-dim); margin-top: 8px;">Teste prático pra confirmar que está tudo ligado:</p>
+    <ul>
+      <li>Editor do Elementor aberto, pontinho verde aceso no Atomik</li>
+      <li>No Claude Code, manda: <em>"insere uma seção com um título e um botão primário"</em></li>
+      <li>Acompanha o canvas do editor — em segundos os componentes aparecem</li>
+      <li>Se aconteceu, você acabou de virar uma máquina de fazer página</li>
+    </ul>
+  </section>
+
+  <section class="trouble">
+    <h2>Algo não funcionou?</h2>
+    <p class="lead">Erros comuns e como resolver.</p>
+    <div class="faq">
+
+      <details>
+        <summary>O comando <code style="font-family:'JetBrains Mono';color:var(--honey);font-size:12px;">npm install -g</code> deu erro</summary>
+        <div>
+          Três possibilidades:<br><br>
+          <strong>1. "command not found: npm"</strong> — o Node.js não foi instalado direito. Volta no passo 1, baixa de novo do site oficial e reinicia o computador.<br><br>
+          <strong>2. "permission denied" / "EACCES"</strong> — no Mac/Linux prefixe com <code class="inline">sudo</code>: <code class="inline">sudo npm install -g @atomik-dev/mcp</code><br><br>
+          <strong>3. "404 Not Found"</strong> — confira se digitou exatamente <code class="inline">@atomik-dev/mcp</code> (com arroba e hífen).
+        </div>
+      </details>
+
+      <details>
+        <summary>O <code style="font-family:'JetBrains Mono';color:var(--honey);font-size:12px;">/mcp</code> diz que o atomik está "failed" ou "disconnected"</summary>
+        <div>
+          Confira se o JSON do passo 3 está bem formatado:<br><br>
+          <strong>1.</strong> Todas as chaves <code class="inline">{ }</code> bem fechadas, vírgulas no lugar.<br>
+          <strong>2.</strong> O <code class="inline">"command"</code> deve ser exatamente <code class="inline">"atomik-mcp"</code> (com hífen).<br>
+          <strong>3.</strong> No terminal, teste se o comando existe: <code class="inline">which atomik-mcp</code> (Mac/Linux) ou <code class="inline">where atomik-mcp</code> (Windows). Tem que aparecer um caminho.<br><br>
+          Se nenhuma das opções resolver, copie o conteúdo do <code class="inline">~/.claude.json</code> pra <a href="https://jsonlint.com" target="_blank" rel="noopener">jsonlint.com</a> pra validar o formato.
+        </div>
+      </details>
+
+      <details>
+        <summary>O pontinho do Atomik fica vermelho ou cinza</summary>
+        <div>
+          O pontinho vermelho/cinza significa que o servidor MCP não está rodando. Razões:<br><br>
+          <strong>1.</strong> O Claude Code está fechado — abra ele, o pontinho fica verde sozinho em até 10 segundos.<br>
+          <strong>2.</strong> Outro Claude Code está rodando em background — feche todos, espere 10s e abre só um.<br>
+          <strong>3.</strong> O servidor travou — no Mac/Linux: <code class="inline">rm /tmp/atomik-mcp.lock</code> e reabra o Claude Code.
+        </div>
+      </details>
+
+      <details>
+        <summary>O Claude diz "tool not found" quando peço algo do Atomik</summary>
+        <div>
+          O Claude Code não recarregou a configuração. Fecha o Claude Code <strong>totalmente</strong> (não só a janela — pela barra de tarefas / Cmd+Q) e abre de novo.
+        </div>
+      </details>
+
+      <details>
+        <summary>Quero atualizar pra uma versão nova</summary>
+        <div>
+          No Terminal/Prompt:
+          <div class="code-block" style="margin-top:10px;">
+            <pre>npm update -g @atomik-dev/mcp</pre>
+          </div>
+          Depois reinicia o Claude Code. Pronto.
+        </div>
+      </details>
+
+      <details>
+        <summary>Quero desinstalar</summary>
+        <div>
+          No Terminal/Prompt:
+          <div class="code-block" style="margin-top:10px;">
+            <pre>npm uninstall -g @atomik-dev/mcp</pre>
+          </div>
+          E remova a seção <code class="inline">"atomik"</code> do <code class="inline">~/.claude.json</code>.
+        </div>
+      </details>
+
+      <details>
+        <summary>Nada funciona — onde peço socorro?</summary>
+        <div>
+          Manda mensagem no Instagram <a href="https://instagram.com/atomik.dev" target="_blank" rel="noopener">@atomik.dev</a> ou abre uma issue em <a href="https://github.com/ciparoni/atomik-mcp/issues" target="_blank" rel="noopener">github.com/ciparoni/atomik-mcp/issues</a> contando:<br><br>
+          – Em qual passo travou<br>
+          – Qual mensagem de erro apareceu (print ou texto)<br>
+          – Qual sistema (Mac, Windows, Linux)
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+  <footer>
+    Atomik MCP · Tutorial de instalação · Atualizado em maio/2026<br>
+    <a href="https://github.com/ciparoni/atomik-mcp">github.com/ciparoni/atomik-mcp</a> · <a href="https://npmjs.com/package/@atomik-dev/mcp">@atomik-dev/mcp</a>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.dataset.code;
+      try {
+        await navigator.clipboard.writeText(code);
+        const original = btn.textContent;
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1500);
+      } catch (e) {
+        btn.textContent = 'Erro';
+      }
+    });
+  });
+
+  document.querySelectorAll('.os-tabs').forEach(tabs => {
+    tabs.addEventListener('click', e => {
+      if (!e.target.matches('.os-tab')) return;
+      const parent = tabs.parentElement;
+      tabs.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      parent.querySelectorAll('.os-panel').forEach(p => p.classList.remove('active'));
+      parent.querySelector('#' + e.target.dataset.target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

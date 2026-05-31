@@ -1,0 +1,48 @@
+{
+  "name": "@atomik-dev/mcp",
+  "version": "1.0.0",
+  "description": "MCP server que conecta Claude ao editor do Elementor via extensão Atomik. Permite construir páginas Elementor em linguagem natural.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "atomik-mcp": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "anthropic",
+    "elementor",
+    "wordpress",
+    "atomik",
+    "model-context-protocol"
+  ],
+  "author": "Othon Ciparoni <ciparoni@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciparoni/atomik-mcp.git"
+  },
+  "homepage": "https://github.com/ciparoni/atomik-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/ciparoni/atomik-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

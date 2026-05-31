@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Atomik MCP — O que pedir pro Claude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=Cabin:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0d0a;
+    --bg-elevated: #181410;
+    --bg-card: #1e1812;
+    --bg-card-hover: #251e16;
+    --border: #2a221a;
+    --border-strong: #3a2f24;
+    --honey: #ffc107;
+    --amber: #ff9800;
+    --text: #f5ede0;
+    --text-dim: #b8a890;
+    --text-muted: #7a6e5e;
+    --accent-soft: rgba(255, 193, 7, 0.08);
+    --accent-mid: rgba(255, 193, 7, 0.18);
+    --shadow-amber: 0 0 0 1px rgba(255, 193, 7, 0.25), 0 8px 32px rgba(255, 152, 0, 0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cabin', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(255, 193, 7, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(255, 152, 0, 0.03) 0%, transparent 50%);
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 193, 7, 0.03) 0%, transparent 100%);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--honey);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .brand-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--honey);
+    box-shadow: 0 0 8px var(--honey);
+  }
+  h1 {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 56px;
+    line-height: 1.05;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  h1 em {
+    color: var(--honey);
+    font-style: italic;
+  }
+  .subtitle {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 720px;
+    line-height: 1.55;
+  }
+  .stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 36px;
+    color: var(--honey);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .how-it-works {
+    margin: 48px 0 32px;
+    padding: 28px 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .how-title {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 22px;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    width: 28px; height: 28px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--accent-mid);
+    border: 1px solid var(--honey);
+    color: var(--honey);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .step-text { color: var(--text-dim); font-size: 13.5px; line-height: 1.5; }
+  .step-text strong { color: var(--text); font-weight: 600; }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(15, 13, 10, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px 0;
+    margin: 32px -24px 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toolbar-inner {
+    max-width: 1232px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search {
+    flex: 1;
+    min-width: 240px;
+    padding: 12px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Cabin', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search:focus {
+    border-color: var(--honey);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .search::placeholder { color: var(--text-muted); }
+
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 14px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Cabin', sans-serif;
+    white-space: nowrap;
+  }
+  .chip:hover { background: var(--bg-card-hover); color: var(--text); }
+  .chip.active {
+    background: var(--honey);
+    border-color: var(--honey);
+    color: #1a1207;
+    font-weight: 600;
+  }
+
+  section.category { margin: 48px 0; scroll-margin-top: 100px; }
+  .cat-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-num {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 14px;
+    color: var(--honey);
+    letter-spacing: 0.1em;
+  }
+  .cat-title {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .cat-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 4px 12px;
+    background: var(--bg-elevated);
+    border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+  .cat-desc {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 28px;
+    max-width: 760px;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+  }
+
+  .tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: all 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--honey), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .tool-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .tool-card:hover::before { opacity: 0.6; }
+
+  .tool-prompt {
+    font-family: 'Castoro', Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -0.005em;
+  }
+  .tool-prompt::before {
+    content: '"';
+    color: var(--honey);
+    font-style: normal;
+    font-weight: 700;
+    margin-right: 2px;
+  }
+  .tool-prompt::after {
+    content: '"';
+    color: var(--honey);
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+
+  .tool-desc {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .tool-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-strong);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+  .tool-fn {
+    color: var(--honey);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+
+  .toc {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    max-width: 220px;
+    z-index: 40;
+    display: none;
+  }
+  @media (min-width: 1500px) { .toc { display: block; } }
+  .toc-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .toc-link {
+    display: block;
+    font-size: 13px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 5px 0;
+    transition: color 0.15s;
+    line-height: 1.3;
+  }
+  .toc-link:hover { color: var(--honey); }
+
+  .table-view {
+    margin: 56px 0 32px;
+    padding: 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .table-title {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  .table-sub {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 12px 14px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child { border-radius: 0 8px 0 0; }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: var(--bg-card); }
+  .td-num { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .td-cat {
+    color: var(--text-dim);
+    font-size: 12px;
+    padding: 3px 8px;
+    background: var(--accent-soft);
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: 500;
+  }
+  .td-fn { font-family: 'JetBrains Mono', monospace; color: var(--honey); font-size: 12px; }
+
+  .tips {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.06) 0%, rgba(255, 152, 0, 0.03) 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 32px 0;
+  }
+  .tips-title {
+    font-family: 'Castoro', Georgia, serif;
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .tips ul { list-style: none; }
+  .tips li {
+    position: relative;
+    padding: 10px 0 10px 28px;
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.55;
+    border-bottom: 1px dashed var(--border);
+  }
+  .tips li:last-child { border-bottom: none; }
+  .tips li::before {
+    content: '→';
+    position: absolute;
+    left: 0; top: 10px;
+    color: var(--honey);
+    font-weight: 700;
+  }
+  .tips li strong { color: var(--text); font-weight: 600; }
+
+  footer {
+    margin-top: 64px;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  footer a { color: var(--honey); text-decoration: none; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 36px; }
+    .cat-title { font-size: 24px; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 16px; }
+    header { padding: 36px 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc" id="toc"></nav>
+
+<div class="container">
+  <header>
+    <div class="brand"><span class="brand-dot"></span>Atomik MCP</div>
+    <h1>O que pedir pro <em>Claude</em> dentro do Elementor</h1>
+    <p class="subtitle">Catálogo das 50 ferramentas que o Atomik expõe via MCP. Cada item mostra o que falar em português normal e o que vai acontecer no editor.</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">50</span><span class="stat-label">Ferramentas</span></div>
+      <div class="stat"><span class="stat-num">14</span><span class="stat-label">Categorias</span></div>
+      <div class="stat"><span class="stat-num">0</span><span class="stat-label">Linhas de código</span></div>
+    </div>
+  </header>
+
+  <div class="how-it-works">
+    <h2 class="how-title">Como funciona</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Abre o editor do <strong>Elementor</strong> numa aba do Chrome.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">Confere o <strong>pontinho verde</strong> no painel do Atomik.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Pede pro Claude em <strong>português normal</strong>. Ele executa direto no editor.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <input type="text" class="search" id="search" placeholder="Procurar (ex: cor, fonte, popup, animação...)" autocomplete="off">
+      <div class="filters" id="filters"></div>
+    </div>
+  </div>
+
+  <main id="categories"></main>
+
+  <div class="table-view">
+    <h2 class="table-title">Tabela rápida</h2>
+    <p class="table-sub">Todos os 50 comandos numerados.</p>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Categoria</th><th>Função MCP</th><th>Para quê</th></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <div class="tips">
+    <h2 class="tips-title">Dicas pra pedir bem</h2>
+    <ul>
+      <li><strong>Selecione antes.</strong> Clica no elemento no editor — o Claude descobre sozinho onde aplicar.</li>
+      <li><strong>Linguagem natural funciona.</strong> "Padding 40 em cima e embaixo" entrega mais que tentar passar JSON.</li>
+      <li><strong>Combine pedidos.</strong> "Cria uma seção, coloca 3 cards e adiciona uma luz amarela atrás" — o Claude planeja a sequência.</li>
+      <li><strong>Desfaz é seu amigo.</strong> Se algo deu errado, diz "desfaz" e tenta outra abordagem.</li>
+      <li><strong>Salva quando estiver feliz.</strong> "Salva a página" ao final garante o trabalho.</li>
+    </ul>
+  </div>
+
+  <div class="tips">
+    <h2 class="tips-title">Quando algo não funciona</h2>
+    <ul>
+      <li><strong>Pontinho apagado:</strong> editor do Elementor precisa estar aberto e o Atomik ativo.</li>
+      <li><strong>"Elemento não encontrado":</strong> o ID que o Claude usou não existe mais. Peça pra ele listar a estrutura de novo.</li>
+      <li><strong>"Função indisponível":</strong> recurso novo do MCP que ainda não está pronto na extensão. Avisa o time.</li>
+      <li><strong>Popup / vídeo / cursor com comportamento estranho:</strong> são as tools mais novas e podem precisar de ajuste fino.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Atomik MCP · 50 ferramentas · Reload da extensão e do servidor MCP ativa as últimas mudanças
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    cat: 'Ver o que tem na página',
+    desc: 'Antes de mexer, dá pra olhar o que já existe no editor.',
+    icon: '01',
+    tools: [
+      { prompt: 'Mostra o que eu selecionei agora', desc: 'Devolve o elemento ativo: tipo, ID, em qual container está.', fn: 'obter_selecao_atual' },
+      { prompt: 'Lista a estrutura da página', desc: 'Árvore completa: seções, containers, widgets e seus IDs.', fn: 'ler_estrutura_pagina' },
+      { prompt: 'Me mostra o JSON desse elemento (com ID)', desc: 'Lê tudo de um elemento específico: settings, styles, filhos.', fn: 'ler_elemento' },
+      { prompt: 'Procura todos os botões com texto "Comprar"', desc: 'Busca por tipo de widget, texto contido, ou classe.', fn: 'buscar_elementos' },
+    ],
+  },
+  {
+    cat: 'Adicionar componentes prontos',
+    desc: 'A biblioteca do Atomik tem cards, abas, botões, timelines, formulários e muito mais. É a forma mais rápida de montar uma página.',
+    icon: '02',
+    tools: [
+      { prompt: 'Quais componentes existem no Atomik?', desc: 'Lista o catálogo inteiro por categoria.', fn: 'listar_componentes' },
+      { prompt: 'Insere um card de depoimento', desc: 'Adiciona um componente onde está selecionado.', fn: 'inserir_componente' },
+      { prompt: 'Insere um botão primário sólido em modo claro', desc: 'Mesma coisa, mas com a variante light.', fn: 'inserir_componente' },
+      { prompt: 'Monta um hero com título, descrição e dois botões', desc: 'Adiciona vários componentes em sequência num único pedido.', fn: 'inserir_multiplos_componentes' },
+    ],
+  },
+  {
+    cat: 'Construir do zero',
+    desc: 'Quando nenhum componente da biblioteca serve.',
+    icon: '03',
+    tools: [
+      { prompt: 'Cria um container vazio aqui', desc: 'Adiciona um flexbox em branco pra você preencher.', fn: 'criar_elemento' },
+      { prompt: 'Cria um título "Bem-vindo" amarelo', desc: 'Widget de texto já estilizado num único pedido.', fn: 'criar_elemento' },
+      { prompt: 'Duplica esse elemento', desc: 'Faz uma cópia idêntica ao lado do original.', fn: 'duplicar_elemento' },
+      { prompt: 'Move esse elemento pra dentro daquele container', desc: 'Reposiciona na árvore mantendo o conteúdo.', fn: 'mover_elemento' },
+      { prompt: 'Apaga esse elemento', desc: 'Remove do editor.', fn: 'remover_elemento' },
+    ],
+  },
+  {
+    cat: 'Ajustar estilo',
+    desc: 'Cores, fontes, espaçamento e tudo mais — sem precisar abrir o painel do Elementor.',
+    icon: '04',
+    tools: [
+      { prompt: 'Deixa o fundo desse card amarelo claro', desc: 'Aplica cor de fundo (também funciona pra texto, borda, etc).', fn: 'definir_cor' },
+      { prompt: 'Cor do texto vermelha no hover', desc: 'Aplica cor com estado pseudo (hover, focus, active).', fn: 'definir_cor' },
+      { prompt: 'Fonte Cabin, peso 600, tamanho 18px', desc: 'Família, peso, tamanho, line-height e letter-spacing.', fn: 'definir_tipografia' },
+      { prompt: 'Padding 40 em cima e embaixo, 20 nas laterais', desc: 'Margem e padding por lado, em px.', fn: 'definir_espacamento' },
+      { prompt: 'Largura: 4 colunas de 12 com gutter 20', desc: 'Aplica a fórmula do grid Atomik — sempre responsivo.', fn: 'definir_largura' },
+      { prompt: 'Borda arredondada de 12px só em cima', desc: 'Border-radius canto a canto.', fn: 'definir_border_radius' },
+      { prompt: 'Sombra grande embaixo: 0 20px 60px preto', desc: 'Box-shadow com valor CSS completo.', fn: 'definir_sombra' },
+    ],
+  },
+  {
+    cat: 'Selecionar e navegar',
+    desc: 'Controlar a seleção e desfazer/refazer ações.',
+    icon: '05',
+    tools: [
+      { prompt: 'Seleciona o elemento com ID abc1234', desc: 'Foca o cursor do editor num elemento específico.', fn: 'selecionar_elemento' },
+      { prompt: 'Tira a seleção', desc: 'Limpa o que está selecionado no editor.', fn: 'limpar_selecao' },
+      { prompt: 'Desfaz', desc: 'Volta a última ação (Cmd+Z).', fn: 'desfazer' },
+      { prompt: 'Refaz', desc: 'Refaz a última ação desfeita (Cmd+Shift+Z).', fn: 'refazer' },
+      { prompt: 'Salva a página', desc: 'Aciona o salvamento automático do Elementor.', fn: 'salvar_pagina' },
+    ],
+  },
+  {
+    cat: 'Mexer em vários elementos',
+    desc: 'Pra mudar algo em TODA a página de uma vez. O fluxo é em 2 passos: descobrir o que tem, depois alterar.',
+    icon: '06',
+    tools: [
+      { prompt: 'Quais fontes estão sendo usadas?', desc: 'Lista todas as font-family + onde aparecem.', fn: 'varrer_pagina' },
+      { prompt: 'Quantos tamanhos de fonte diferentes tem?', desc: 'Lista por tamanho, por breakpoint.', fn: 'varrer_pagina' },
+      { prompt: 'Quais pesos de fonte usei?', desc: 'Lista por peso (300, 400, 600, etc).', fn: 'varrer_pagina' },
+      { prompt: 'Mostra todas as cores da página', desc: 'Lista hex e cores globais com contagem.', fn: 'varrer_pagina' },
+      { prompt: 'Quais links existem?', desc: 'Lista URLs e onde estão.', fn: 'varrer_pagina' },
+      { prompt: 'Troca todo Inter 400 por Cabin 500', desc: 'Substitui peso de fonte em massa.', fn: 'atualizar_peso_em_massa' },
+      { prompt: 'Todo título 32px no desktop vira 28px', desc: 'Atualiza tamanho de fonte em massa.', fn: 'atualizar_tamanho_em_massa' },
+      { prompt: 'Troca a cor #cccccc por #ffc107 em tudo', desc: 'Substituição global de cor.', fn: 'atualizar_cores_em_massa' },
+      { prompt: 'Substitui esse link antigo pelo novo em toda página', desc: 'Find & replace de URL.', fn: 'substituir_link_em_massa' },
+    ],
+  },
+  {
+    cat: 'Kit Global (marca)',
+    desc: 'O "Kit" central do Elementor com cores e tipografia. Mexer aqui muda a página inteira.',
+    icon: '07',
+    tools: [
+      { prompt: 'Quais cores estão no Kit Global?', desc: 'Lista cores V3 (system_colors) e V4 (variables).', fn: 'listar_kit_cores' },
+      { prompt: 'Cria uma cor global chamada "Honey" com #ffc107', desc: 'Adiciona uma nova cor ao Kit.', fn: 'criar_cor_global' },
+      { prompt: 'Muda a cor primária pra #0066ff', desc: 'Edita o valor de uma cor existente — propaga em todos os elementos vinculados.', fn: 'editar_cor_global' },
+      { prompt: 'Quais estilos de texto tem no Kit?', desc: 'Lista tipografia global.', fn: 'listar_kit_tipografia' },
+    ],
+  },
+  {
+    cat: 'Trazer design do Figma',
+    desc: 'Se você tem cores e tipografia num arquivo Figma, dá pra jogar tudo no Elementor.',
+    icon: '08',
+    tools: [
+      { prompt: 'Aplica as cores do Figma no Kit', desc: 'Sincroniza Variables/Styles do Figma com o Kit Global do Elementor.', fn: 'figma_aplicar_cores' },
+      { prompt: 'Aplica a tipografia do Figma', desc: 'Sincroniza Text Styles do Figma com o Kit de tipografia.', fn: 'figma_aplicar_tipografia' },
+      { prompt: 'Importa esse grid do Figma como bento', desc: 'Recria layout de grid no editor a partir do node do Figma.', fn: 'figma_importar_grid' },
+    ],
+  },
+  {
+    cat: 'Ambiência visual',
+    desc: 'Luzes, patterns e transições que dão "alma" pra seção.',
+    icon: '09',
+    tools: [
+      { prompt: 'Coloca uma luz amarela no centro dessa seção', desc: 'Glow desfocado atrás do conteúdo.', fn: 'inserir_luz_fundo' },
+      { prompt: 'Luz branca no canto superior direito, opacidade 30', desc: 'Mesma luz com posição e intensidade customizadas.', fn: 'inserir_luz_fundo' },
+      { prompt: 'Pattern de pontinhos discreto atrás', desc: 'Padrão repetido (pontos, grade, diagonal, cruz).', fn: 'inserir_pattern' },
+      { prompt: 'Transição em curva entre essa seção e a próxima', desc: 'Borda animada entre seções (shutter, pixel, curva).', fn: 'aplicar_transicao_secao' },
+    ],
+  },
+  {
+    cat: 'Animações',
+    desc: 'Animar texto e elementos.',
+    icon: '10',
+    tools: [
+      { prompt: 'Anima esse título letra por letra em cascata', desc: 'Letras aparecem uma a uma na entrada.', fn: 'aplicar_animacao' },
+      { prompt: 'Revelação por linhas no scroll', desc: 'Cada linha de texto aparece separadamente conforme rola.', fn: 'aplicar_animacao' },
+      { prompt: 'Aplica a animação "fade up" da biblioteca', desc: 'Usa um preset customizado da biblioteca do Atomik.', fn: 'aplicar_animacao' },
+    ],
+  },
+  {
+    cat: 'Popups',
+    desc: '7 templates de popup com visuais diferentes.',
+    icon: '11',
+    tools: [
+      { prompt: 'Cria um popup com efeito de pixels', desc: 'Overlay com transição pixelada na entrada.', fn: 'criar_popup' },
+      { prompt: 'Popup com animação SVG', desc: 'Overlay com SVG animado.', fn: 'criar_popup' },
+      { prompt: 'Popup tipo veneziana (shutter)', desc: 'Overlay desliza tipo persiana.', fn: 'criar_popup' },
+      { prompt: 'Popup simples só com fundo escuro', desc: 'Overlay básico sem efeitos.', fn: 'criar_popup' },
+      { prompt: 'Popup em 2 colunas (texto + imagem)', desc: 'Layout dividido em duas colunas.', fn: 'criar_popup' },
+      { prompt: 'Drawer lateral que desliza da direita', desc: 'Painel lateral em vez de centro.', fn: 'criar_popup' },
+      { prompt: 'Popup de vídeo com botão de play', desc: 'Vídeo dentro do popup com overlay de play.', fn: 'criar_popup' },
+    ],
+  },
+  {
+    cat: 'Vídeos especiais',
+    desc: 'Vídeos com comportamentos customizados.',
+    icon: '12',
+    tools: [
+      { prompt: 'Vídeo controlado por scroll', desc: 'Frames sincronizados com a rolagem da página.', fn: 'inserir_video' },
+      { prompt: 'GIF que toca em loop', desc: 'Loop curto, auto-play.', fn: 'inserir_video' },
+      { prompt: 'Vídeo que toca só no hover', desc: 'Roda quando passa o mouse, pausa quando sai.', fn: 'inserir_video' },
+      { prompt: 'VSL com controles customizados', desc: 'Player completo de vídeo sales letter.', fn: 'inserir_video' },
+    ],
+  },
+  {
+    cat: 'Cursor customizado',
+    desc: 'Personalizar como o cursor do mouse aparece no site.',
+    icon: '13',
+    tools: [
+      { prompt: 'Cursor com bolinha preta minimalista', desc: 'Substitui o cursor padrão por um custom.', fn: 'aplicar_cursor' },
+      { prompt: 'Label "Clique" quando passar nesse botão', desc: 'Texto colado no cursor sobre o elemento.', fn: 'inserir_cursor_label' },
+      { prompt: 'Cursor cresce nesse elemento', desc: 'Efeito de crescimento ao passar.', fn: 'inserir_cursor_grow' },
+      { prompt: 'Brilho seguindo o cursor sobre essa seção', desc: 'Glow que segue o mouse.', fn: 'aplicar_cursor_glow' },
+    ],
+  },
+  {
+    cat: 'Código (CSS / JS)',
+    desc: 'Pra quando o estilo nativo não chega.',
+    icon: '14',
+    tools: [
+      { prompt: 'Adiciona esse CSS no widget Scripts', desc: 'Cola CSS bruto na página.', fn: 'inserir_css_snippet' },
+      { prompt: 'Aplica esse CSS pra todos os botões', desc: 'CSS pra um seletor específico.', fn: 'inserir_tag_css' },
+      { prompt: 'Envolve essa seção com <div class="wrapper">', desc: 'Adiciona tag HTML em volta do conteúdo.', fn: 'envolver_html' },
+      { prompt: 'Adiciona esse JavaScript na página', desc: 'Cola JS bruto.', fn: 'inserir_js_snippet' },
+      { prompt: 'Valida o CSS atual', desc: 'Confere se a sintaxe do CSS está OK.', fn: 'validar_css' },
+    ],
+  },
+];
+
+const ALL_TABLE = [
+  ['1', 'Catálogo', 'listar_componentes', 'Lista todos os componentes prontos'],
+  ['2', 'Catálogo', 'inserir_componente', 'Insere 1 componente'],
+  ['3', 'Catálogo', 'inserir_multiplos_componentes', 'Insere vários em sequência'],
+  ['4', 'Estrutura', 'ler_estrutura_pagina', 'Devolve árvore da página'],
+  ['5', 'Estrutura', 'ler_elemento', 'Lê JSON de um elemento'],
+  ['6', 'Estrutura', 'criar_elemento', 'Cria elemento do zero'],
+  ['7', 'Estrutura', 'editar_elemento', 'Edita settings ou styles'],
+  ['8', 'Estrutura', 'remover_elemento', 'Apaga elemento'],
+  ['9', 'Ambiência', 'inserir_luz_fundo', 'Glow desfocado num container'],
+  ['10', 'Ambiência', 'inserir_pattern', 'Pattern decorativo'],
+  ['11', 'Seleção', 'obter_selecao_atual', 'Mostra o que está selecionado'],
+  ['12', 'Seleção', 'selecionar_elemento', 'Seleciona por ID'],
+  ['13', 'Seleção', 'limpar_selecao', 'Limpa seleção'],
+  ['14', 'Seleção', 'buscar_elementos', 'Busca por tipo/texto/classe'],
+  ['15', 'Seleção', 'duplicar_elemento', 'Duplica'],
+  ['16', 'Seleção', 'mover_elemento', 'Move pra outro pai'],
+  ['17', 'Histórico', 'desfazer', 'Cmd+Z'],
+  ['18', 'Histórico', 'refazer', 'Cmd+Shift+Z'],
+  ['19', 'Histórico', 'salvar_pagina', 'Salva'],
+  ['20', 'Estilo', 'definir_cor', 'Cor (fundo / texto / borda)'],
+  ['21', 'Estilo', 'definir_tipografia', 'Família / peso / tamanho / espaçamento'],
+  ['22', 'Estilo', 'definir_espacamento', 'Margin / padding 4 lados'],
+  ['23', 'Estilo', 'definir_largura', 'Largura via grid Atomik'],
+  ['24', 'Estilo', 'definir_sombra', 'Box-shadow'],
+  ['25', 'Estilo', 'definir_border_radius', 'Cantos arredondados'],
+  ['26', 'Kit', 'listar_kit_cores', 'Cores do Kit Global'],
+  ['27', 'Kit', 'criar_cor_global', 'Adiciona cor ao Kit'],
+  ['28', 'Kit', 'editar_cor_global', 'Edita cor do Kit'],
+  ['29', 'Kit', 'listar_kit_tipografia', 'Estilos de texto do Kit'],
+  ['30', 'Análise', 'varrer_pagina', 'Lista fontes / cores / links / etc'],
+  ['31', 'Massa', 'atualizar_cores_em_massa', 'Troca cor em todos os lugares'],
+  ['32', 'Massa', 'atualizar_peso_em_massa', 'Troca peso de fonte em massa'],
+  ['33', 'Massa', 'atualizar_tamanho_em_massa', 'Troca tamanho de fonte em massa'],
+  ['34', 'Massa', 'substituir_link_em_massa', 'Troca URL em todos os lugares'],
+  ['35', 'Figma', 'figma_aplicar_cores', 'Cores Figma → Kit'],
+  ['36', 'Figma', 'figma_aplicar_tipografia', 'Tipografia Figma → Kit'],
+  ['37', 'Figma', 'figma_importar_grid', 'Grid Figma → bento Elementor'],
+  ['38', 'Animação', 'aplicar_animacao', 'Letras cascata / revelação linhas / custom'],
+  ['39', 'Animação', 'aplicar_transicao_secao', 'Shutter / pixel / curva'],
+  ['40', 'Popup', 'criar_popup', '7 templates de popup'],
+  ['41', 'Vídeo', 'inserir_video', 'Scroll / GIF / hover / VSL'],
+  ['42', 'Cursor', 'aplicar_cursor', 'Cursor customizado'],
+  ['43', 'Cursor', 'inserir_cursor_label', 'Label junto ao cursor'],
+  ['44', 'Cursor', 'inserir_cursor_grow', 'Cursor cresce'],
+  ['45', 'Cursor', 'aplicar_cursor_glow', 'Brilho seguindo o cursor'],
+  ['46', 'Código', 'inserir_css_snippet', 'Cola CSS no Scripts'],
+  ['47', 'Código', 'inserir_tag_css', 'CSS pra seletor específico'],
+  ['48', 'Código', 'envolver_html', 'Envolve com tags HTML'],
+  ['49', 'Código', 'inserir_js_snippet', 'Cola JS no Scripts'],
+  ['50', 'Código', 'validar_css', 'Confere sintaxe do CSS'],
+];
+
+function slugify(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function renderCategories() {
+  const root = document.getElementById('categories');
+  const toc = document.getElementById('toc');
+  const filters = document.getElementById('filters');
+
+  const tocInner = ['<div class="toc-title">Categorias</div>'];
+  const filterChips = ['<button class="chip active" data-cat="all">Todas</button>'];
+
+  DATA.forEach((cat, i) => {
+    const id = slugify(cat.cat);
+    tocInner.push(`<a class="toc-link" href="#${id}">${cat.icon} · ${cat.cat}</a>`);
+    filterChips.push(`<button class="chip" data-cat="${id}">${cat.cat}</button>`);
+
+    const cards = cat.tools.map(t => `
+      <article class="tool-card" data-text="${(t.prompt + ' ' + t.desc + ' ' + t.fn).toLowerCase()}">
+        <div class="tool-prompt">${t.prompt}</div>
+        <div class="tool-desc">${t.desc}</div>
+        <div class="tool-meta">
+          <span>Função MCP</span>
+          <span class="tool-fn">${t.fn}</span>
+        </div>
+      </article>
+    `).join('');
+
+    root.insertAdjacentHTML('beforeend', `
+      <section class="category" id="${id}" data-cat="${id}">
+        <div class="cat-header">
+          <span class="cat-num">${cat.icon}</span>
+          <h2 class="cat-title">${cat.cat}</h2>
+          <span class="cat-count">${cat.tools.length} tool${cat.tools.length > 1 ? 's' : ''}</span>
+        </div>
+        <p class="cat-desc">${cat.desc}</p>
+        <div class="tools-grid">${cards}</div>
+      </section>
+    `);
+  });
+
+  toc.innerHTML = tocInner.join('');
+  filters.innerHTML = filterChips.join('');
+}
+
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = ALL_TABLE.map(row => `
+    <tr>
+      <td class="td-num">${row[0]}</td>
+      <td><span class="td-cat">${row[1]}</span></td>
+      <td class="td-fn">${row[2]}</td>
+      <td>${row[3]}</td>
+    </tr>
+  `).join('');
+}
+
+function setupFilters() {
+  const filters = document.getElementById('filters');
+  filters.addEventListener('click', e => {
+    if (!e.target.matches('.chip')) return;
+    filters.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    const cat = e.target.dataset.cat;
+    document.querySelectorAll('section.category').forEach(section => {
+      if (cat === 'all' || section.dataset.cat === cat) {
+        section.classList.remove('hidden');
+      } else {
+        section.classList.add('hidden');
+      }
+    });
+    document.getElementById('search').value = '';
+    document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden'));
+  });
+}
+
+function setupSearch() {
+  const search = document.getElementById('search');
+  search.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) {
+      document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden'));
+      document.querySelectorAll('section.category').forEach(s => s.classList.remove('hidden'));
+      return;
+    }
+    document.getElementById('filters').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    document.getElementById('filters').querySelector('[data-cat="all"]').classList.add('active');
+
+    document.querySelectorAll('section.category').forEach(section => {
+      const cards = section.querySelectorAll('.tool-card');
+      let anyVisible = false;
+      cards.forEach(card => {
+        const match = card.dataset.text.includes(q);
+        card.classList.toggle('hidden', !match);
+        if (match) anyVisible = true;
+      });
+      section.classList.toggle('hidden', !anyVisible);
+    });
+  });
+}
+
+renderCategories();
+renderTable();
+setupFilters();
+setupSearch();
+</script>
+</body>
+</html>
