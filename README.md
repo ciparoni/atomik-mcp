@@ -2,7 +2,7 @@
 
 > Construa páginas Elementor em linguagem natural, conversando com o Claude.
 
-O **Atomik MCP** conecta o [Claude](https://claude.ai/code) ao editor do Elementor aberto no Chrome, via [extensão Atomik](https://atomik.dev). Com ele instalado, você pede em português normal — *"cria uma seção com 3 cards de depoimento"* — e o Claude monta tudo direto no editor.
+O **Atomik MCP** conecta o [Claude](https://claude.ai/code) ao editor do Elementor aberto no Chrome, via [extensão Atomik](https://atomik.com.br). Com ele instalado, você pede em português normal — *"cria uma seção com 3 cards de depoimento"* — e o Claude monta tudo direto no editor.
 
 ## Pré-requisitos
 
@@ -40,15 +40,9 @@ Reinicie o Claude Code. Pronto.
 3. No Claude Code, peça: *"insere uma seção com um título e um botão primário"*
 4. Acompanhe o canvas — os componentes aparecem em segundos
 
-## Tutorial visual passo a passo
+## O que o MCP oferece
 
-Pra quem nunca mexeu com terminal: [tutorial interativo](https://atomik.dev/mcp/instalacao).
-
-## Catálogo de ferramentas
-
-O MCP expõe 50+ ferramentas pro Claude usar. Veja o [catálogo completo](https://atomik.dev/mcp/catalogo) com exemplos de prompts.
-
-Resumo das categorias:
+50+ ferramentas pro Claude usar, organizadas por categoria:
 
 - **Componentes prontos** — biblioteca Atomik (cards, abas, botões, timelines, formulários)
 - **Estrutura** — criar / editar / mover / duplicar elementos
@@ -67,8 +61,7 @@ npm update -g @atomik-dev/mcp
 
 ## Suporte
 
-- **Bug ou dúvida:** abra uma [issue](https://github.com/ciparoni/atomik-mcp/issues)
-- **Documentação completa:** [atomik.dev/docs](https://atomik.dev/docs)
+Bug ou dúvida: abra uma [issue](https://github.com/ciparoni/atomik-mcp/issues).
 
 ## Licença
 

@@ -1,11 +1,11 @@
 {
   "name": "@atomik-dev/mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server que conecta Claude ao editor do Elementor via extensão Atomik. Permite construir páginas Elementor em linguagem natural.",
   "type": "module",
   "main": "index.js",
   "bin": {
-    "atomik-mcp": "./index.js"
+    "atomik-mcp": "index.js"
   },
   "files": [
     "index.js",
